@@ -9,14 +9,13 @@
     body {
         margin: 0;
         height: 100vh;
-        background: #ffd6e8;
+        background: #ffd6e8; /* baby pink */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         font-family: Arial, sans-serif;
         text-align: center;
-        overflow: hidden;
     }
 
     h1 {
@@ -30,7 +29,6 @@
         gap: 20px;
         justify-content: center;
         align-items: center;
-        position: relative;
     }
 
     button {
@@ -46,41 +44,16 @@
         background: #ff4d88;
         color: white;
         transform: scale(1);
-        z-index: 2;
+    }
+
+    .yes:hover {
+        background: #ff1e6c;
     }
 
     .no {
         background: #cccccc;
         color: black;
         transform: scale(1);
-        z-index: 1;
-    }
-
-    .shake {
-        animation: shake 0.4s;
-    }
-
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        50% { transform: translateX(5px); }
-        75% { transform: translateX(-5px); }
-        100% { transform: translateX(0); }
-    }
-
-    .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        top: -10px;
-        animation: fall 3s linear forwards;
-    }
-
-    @keyframes fall {
-        to {
-            transform: translateY(110vh) rotate(720deg);
-            opacity: 0;
-        }
     }
 
 </style>
@@ -91,9 +64,7 @@
 <h1>Aby Tamang, will you be my Valentine?</h1>
 
 <div class="buttons">
-    <a href="yes.html">
-        <button class="yes" id="yesBtn">Yes 😽🫶🏻</button>
-    </a>
+    <button class="yes" id="yesBtn">Yes 😽🫶🏻</button>
     <button class="no" id="noBtn">No ☹️😔</button>
 </div>
 
@@ -104,49 +75,29 @@ let noScale = 1;
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 
-noBtn.addEventListener("click", () => {
-
-    // Grow Yes
-    yesScale += 0.25;
-    yesBtn.style.transform = `scale(${yesScale})`;
-
-    // Shrink No
-    noScale -= 0.1;
-    if (noScale < 0.5) noScale = 0.5;
-    noBtn.style.transform = `scale(${noScale})`;
-
-    // Shake No dramatically
-    noBtn.classList.add("shake");
-    setTimeout(() => noBtn.classList.remove("shake"), 400);
-
-    // Change No text progressively
-    if (yesScale > 1.5) noBtn.innerText = "Are you sure? 😳";
-    if (yesScale > 2) noBtn.innerText = "Really sure?? 🥺";
-    if (yesScale > 2.5) noBtn.innerText = "This is getting awkward 😭";
-    if (yesScale > 3) noBtn.innerText = "Just press Yes 😭💔";
-
-    // When Yes becomes massive
-    if (yesScale >= 3.5) {
-        launchConfetti();
-        setTimeout(() => {
-            window.location.href = "yes.html";
-        }, 1500);
-    }
+// YES redirects normally
+yesBtn.addEventListener("click", () => {
+    window.location.href = "yes.html";
 });
 
-function launchConfetti() {
-    for (let i = 0; i < 80; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
+// NO shrinks but never disappears
+noBtn.addEventListener("click", () => {
 
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    // Grow YES
+    yesScale += 0.15;
+    yesBtn.style.transform = `scale(${yesScale})`;
 
-        document.body.appendChild(confetti);
+    // Shrink NO (but stop at 0.4 so it's always visible)
+    noScale -= 0.1;
+    if (noScale < 0.4) noScale = 0.4;
+    noBtn.style.transform = `scale(${noScale})`;
 
-        setTimeout(() => confetti.remove(), 3000);
-    }
-}
+    // Funny text escalation
+    if (yesScale > 1.5) noBtn.innerText = "Are you sure? 😳";
+    if (yesScale > 2) noBtn.innerText = "Really sure?? 🥺";
+    if (yesScale > 2.5) noBtn.innerText = "This is unfair 😭";
+    if (yesScale > 3) noBtn.innerText = "Just press Yes 😌❤️";
+});
 </script>
 
 </body>
