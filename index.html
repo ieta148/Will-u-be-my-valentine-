@@ -84,7 +84,7 @@ yesBtn.addEventListener("click", () => {
 noBtn.addEventListener("click", () => {
 
     // Grow YES
-    yesScale += 0.15;
+    yesScale += 1.5;
     yesBtn.style.transform = `scale(${yesScale})`;
 
     // Shrink NO (but stop at 0.4 so it's always visible)
@@ -95,7 +95,7 @@ noBtn.addEventListener("click", () => {
     // Funny text escalation
     if (yesScale > 1.5) noBtn.innerText = "Are you sure? 😳";
     if (yesScale > 2) noBtn.innerText = "Really sure?? 🥺";
-    if (yesScale > 2.5) noBtn.innerText = "This is unfair 😭";
+    if (yesScale > 2.5) noBtn.innerText = "You're being mean again 😭";
     if (yesScale > 3) noBtn.innerText = "Just press Yes 😌❤️";
 });
 </script>
